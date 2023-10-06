@@ -1,7 +1,7 @@
 class OnBoardingInfo {
-  late final imageAsset;
-  late final title;
-  late final description;
+  late final String imageAsset;
+  late final String title;
+  late final String description;
 
   OnBoardingInfo(this.imageAsset, this.title, this.description);
 }

@@ -8,35 +8,57 @@ class OnBoardingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageView.builder(
-          itemCount: controller.onboardingPage.length,
-          itemBuilder: (context, index) {
-            return Container(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Image.asset(controller.onboardingPage[index].imageAsset),
-                    SizedBox(height: 60),
-                    Text(
-                      controller.onboardingPage[index].title,
-                      textAlign: TextAlign.center,
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+      body: SafeArea(
+        child: Stack(
+          children: [
+            PageView.builder(
+                itemCount: controller.onboardingPage.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                              controller.onboardingPage[index].imageAsset),
+                          const SizedBox(height: 60),
+                          Text(
+                            controller.onboardingPage[index].title,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 30),
+                          ),
+                          const SizedBox(height: 16),
+                          Text(
+                            controller.onboardingPage[index].description,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(fontSize: 18),
+                          ),
+                        ],
+                      ),
                     ),
-                    SizedBox(height: 16),
-                    Text(
-                      controller.onboardingPage[index].description,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ],
-                ),
+                  );
+                }),
+            Positioned(
+              bottom: 20,
+              left: 20,
+              child: Row(
+                children: List.generate(
+                    controller.onboardingPage.length,
+                    (index) => Container(
+                          margin: EdgeInsets.all(4),
+                          height: 12,
+                          width: 12,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle, color: Colors.red),
+                        )),
               ),
-            );
-          }),
+            )
+          ],
+        ),
+      ),
     );
   }
 }
