@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:onboarding_demo/controllers/onboarding_controller.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 
 class OnBoardingPage extends StatelessWidget {
-  final OnBoardingController controller = OnBoardingController();
+  final OnBoardingController _controller = OnBoardingController();
   OnBoardingPage({Key? key}) : super(key: key);
 
   @override
@@ -12,7 +13,9 @@ class OnBoardingPage extends StatelessWidget {
         child: Stack(
           children: [
             PageView.builder(
-                itemCount: controller.onboardingPage.length,
+                controller: _controller.pageController,
+                onPageChanged: _controller.selectedPageIndex,
+                itemCount: _controller.onboardingPage.length,
                 itemBuilder: (context, index) {
                   return Container(
                     child: Padding(
@@ -22,17 +25,17 @@ class OnBoardingPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Image.asset(
-                              controller.onboardingPage[index].imageAsset),
+                              _controller.onboardingPage[index].imageAsset),
                           const SizedBox(height: 60),
                           Text(
-                            controller.onboardingPage[index].title,
+                            _controller.onboardingPage[index].title,
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 30),
                           ),
                           const SizedBox(height: 16),
                           Text(
-                            controller.onboardingPage[index].description,
+                            _controller.onboardingPage[index].description,
                             textAlign: TextAlign.center,
                             style: const TextStyle(fontSize: 18),
                           ),
@@ -46,16 +49,33 @@ class OnBoardingPage extends StatelessWidget {
               left: 20,
               child: Row(
                 children: List.generate(
-                    controller.onboardingPage.length,
-                    (index) => Container(
-                          margin: EdgeInsets.all(4),
-                          height: 12,
-                          width: 12,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle, color: Colors.red),
-                        )),
+                    _controller.onboardingPage.length,
+                    (index) => Obx(() {
+                          return Container(
+                            margin: EdgeInsets.all(4),
+                            height: 12,
+                            width: 12,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color:
+                                    _controller.selectedPageIndex.value == index
+                                        ? Colors.red
+                                        : Colors.grey),
+                          );
+                        })),
               ),
-            )
+            ),
+            Positioned(
+                child: FloatingActionButton(
+                  onPressed: () {
+                    _controller.forwardAction();
+                  },
+                  child: Obx(() {
+                    return Text(_controller.isLastPage ? "Start" : "Next");
+                  }),
+                ),
+                bottom: 20,
+                right: 20)
           ],
         ),
       ),
