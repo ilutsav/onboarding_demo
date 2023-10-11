@@ -8,3 +8,11 @@ class QuickPickupController extends GetxController {
     HomePageInfo("Tharu", "assetss/cook.png"),
   ];
 }
+
+class HomeController extends GetxController {
+  final RxBool isFavorite = false.obs;
+
+  void toggleFavorite() {
+    isFavorite.value = !isFavorite.value;
+  }
+}
