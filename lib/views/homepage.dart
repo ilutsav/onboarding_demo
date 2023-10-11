@@ -4,67 +4,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:onboarding_demo/controllers/homepage_controller.dart';
 import 'package:onboarding_demo/views/onboarding_page.dart';
-
-class QuickPickUp extends StatelessWidget {
-  final QuickPickupController _quickPickupController = QuickPickupController();
-  QuickPickUp({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 70,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: _quickPickupController.quickPickup.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: ElevatedButton(
-              onPressed: () {
-                Get.to(() => OnBoardingPage());
-              },
-              style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                Color(0xFFE09437),
-              )),
-              // width: 157,
-              //height: 70,
-              // decoration: ShapeDecoration(
-              //   color: Color(0xFFE09437),
-              //   shape: RoundedRectangleBorder(
-              //     borderRadius: BorderRadius.circular(31),
-              //   ),
-              // ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Container(
-                      width: 60,
-                      height: 60,
-                      decoration: ShapeDecoration(
-                        image: DecorationImage(
-                            image: AssetImage(_quickPickupController
-                                .quickPickup[index].image)),
-                        shape: OvalBorder(),
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 2),
-                  Text(_quickPickupController.quickPickup[index].cusine)
-                ],
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
-}
+import 'package:onboarding_demo/views/widgets.dart';
 
 class SearchBox extends StatelessWidget {
   const SearchBox({
@@ -240,16 +180,17 @@ class HomePage extends StatelessWidget {
                           style: headings().copyWith(
                               fontWeight: FontWeight.w400, fontSize: 18),
                         ),
-                        Icon(Icons.arrow_forward_ios),
+                        const Icon(Icons.arrow_forward_ios),
                       ],
                     ),
                   ],
                 ),
-                SizedBox(height: 18),
-                Container(
-                  height: 113,
+                const SizedBox(height: 18),
+                SizedBox(
+                  height: 114,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
+                    shrinkWrap: false,
                     itemCount: 3,
                     itemBuilder: (context, index) {
                       return Container(
@@ -258,12 +199,50 @@ class HomePage extends StatelessWidget {
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(7),
-                            boxShadow: [
+                            boxShadow: const [
                               BoxShadow(
                                 color: Color(0x16000000),
                                 blurRadius: 8,
                               )
                             ]),
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: CircleAvatar(
+                                radius: 22,
+                                backgroundImage:
+                                    AssetImage("assetss/profile.png"),
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Kanxi ko Bhatti",
+                                  style: headings().copyWith(fontSize: 18),
+                                ),
+                                SizedBox(height: 6),
+                                Row(
+                                  children: List.generate(
+                                      5,
+                                      (index) => Icon(
+                                            Icons.star,
+                                            size: 22,
+                                            color: Colors.amber,
+                                          )),
+                                ),
+                                SizedBox(height: 6),
+                                Text(
+                                  "chabahil",
+                                  style: subHeadings().copyWith(fontSize: 14),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
                       );
                     },
                   ),
@@ -273,141 +252,7 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-          iconSize: 28,
-          landscapeLayout: BottomNavigationBarLandscapeLayout.spread,
-          backgroundColor: Colors.black26,
-          type: BottomNavigationBarType.fixed,
-          elevation: 0,
-          selectedItemColor: Color(0xFFE09437),
-          unselectedItemColor: Colors.white,
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
-              label: "",
-            ),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.person_outline), label: ""),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.favorite_border), label: ""),
-            BottomNavigationBarItem(icon: Icon(Icons.card_travel), label: ""),
-          ]),
-
-      // bottomNavigationBar: Container(
-      //   color: Colors.black,
-      //   padding: EdgeInsets.all(20.0),
-      //   child: Row(
-      //     crossAxisAlignment: CrossAxisAlignment.center, // Optional
-      //     mainAxisAlignment:
-      //         MainAxisAlignment.spaceEvenly, // Change to your own spacing
-      //     children: [
-      //       Icon(
-      //         Icons.home_outlined,
-      //         color: Color(0xFFE09437),
-      //       ), //REPLACE WITH ICON
-      //       Icon(
-      //         Icons.person_outline,
-      //         color: Colors.white,
-      //       ),
-      //       Icon(
-      //         Icons.favorite_border,
-      //         color: Colors.white,
-      //       ),
-      //       Icon(Icons.card_travel, color: Colors.white),
-      //     ],
-      //   ),
-      // ),
-    );
-  }
-}
-
-class Items extends StatelessWidget {
-  const Items({
-    super.key,
-    required HomeController homeController,
-  }) : _homeController = homeController;
-
-  final HomeController _homeController;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 222,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: 4,
-        itemBuilder: (context, index) {
-          return Container(
-            width: 158,
-            height: 220,
-            child: Stack(
-              children: [
-                Positioned(
-                    top: 40,
-                    child: Container(
-                      height: 180,
-                      width: 158,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(color: Color(0x16000000), blurRadius: 8),
-                        ],
-                        borderRadius: BorderRadius.circular(7),
-                      ),
-                    )),
-                Positioned(
-                  left: 28,
-                  child: CircleAvatar(
-                    // backgroundColor: Colors.amber,
-                    foregroundImage: AssetImage('assetss/chowmin.jpeg'),
-                    radius: 52,
-                  ),
-                ),
-                Positioned(
-                  top: 117,
-                  left: 25,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Chowmin",
-                        style: headings(),
-                      ),
-                      SizedBox(height: 8),
-                      Text(
-                        "spicy buff",
-                        style: subHeadings(),
-                      ),
-                      SizedBox(height: 3),
-                      Row(
-                        children: [
-                          Text(
-                            "Rs.110",
-                            style: headings(),
-                          ),
-                          SizedBox(width: 5),
-                          Obx(() {
-                            return IconButton(
-                              icon: _homeController.isFavorite.value
-                                  ? Icon(Icons.favorite_rounded,
-                                      color: Colors.red)
-                                  : Icon(Icons.favorite_border),
-                              onPressed: () {
-                                _homeController.toggleFavorite();
-                              },
-                            );
-                          })
-                        ],
-                      )
-                    ],
-                  ),
-                )
-              ],
-            ),
-          );
-        },
-      ),
+      bottomNavigationBar: NavBar(),
     );
   }
 }
