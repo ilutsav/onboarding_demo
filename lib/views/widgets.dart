@@ -54,7 +54,7 @@ class Items extends StatelessWidget {
                     children: [
                       Text(
                         "Chowmein",
-                        style: headings(),
+                        style: headings().copyWith(fontSize: 18),
                       ),
                       SizedBox(height: 8),
                       Text(
@@ -66,7 +66,7 @@ class Items extends StatelessWidget {
                         children: [
                           Text(
                             "Rs.110",
-                            style: headings(),
+                            style: headings().copyWith(fontSize: 18),
                           ),
                           SizedBox(width: 5),
                           Obx(() {
